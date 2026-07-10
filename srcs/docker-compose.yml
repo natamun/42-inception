@@ -5,7 +5,7 @@ services:
     restart: on-failure
     env_file: .env
     volumes:
-      - ${HOME}/data/mariadb:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
     networks:
       - inception_network
     secrets:
@@ -15,6 +15,14 @@ services:
 networks:
   inception_network:
     driver: bridge
+
+volumes:
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${DATA_PATH}/mariadb
 
 secrets:
   db_password:
