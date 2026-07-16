@@ -28,6 +28,19 @@ services:
       - wp_admin_password
       - wp_user_password
 
+  nginx:
+    build: requirements/nginx
+    image: nginx
+    restart: on-failure
+    depends_on:
+      - wordpress
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress_data:/var/www/wordpress
+    networks:
+      - inception_network
+
 networks:
   inception_network:
     driver: bridge
